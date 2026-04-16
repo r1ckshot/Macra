@@ -2,7 +2,10 @@ import '../global.css';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { PaperProvider, MD3DarkTheme } from 'react-native-paper';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Colors } from '@/constants/colors';
+
+const queryClient = new QueryClient();
 
 const theme = {
   ...MD3DarkTheme,
@@ -18,12 +21,14 @@ const theme = {
 
 export default function RootLayout() {
   return (
-    <PaperProvider theme={theme}>
-      <StatusBar style="light" />
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(auth)" />
-        <Stack.Screen name="(tabs)" />
-      </Stack>
-    </PaperProvider>
+    <QueryClientProvider client={queryClient}>
+      <PaperProvider theme={theme}>
+        <StatusBar style="light" />
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(auth)" />
+          <Stack.Screen name="(tabs)" />
+        </Stack>
+      </PaperProvider>
+    </QueryClientProvider>
   );
 }
